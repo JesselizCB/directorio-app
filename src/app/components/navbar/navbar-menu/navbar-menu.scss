@@ -1,103 +1,37 @@
-:host {
-  display: block;
-}
-
-// Variables
-$menu-text-color: #ffffff;
-$menu-hover-bg: rgba(255, 255, 255, 0.1);
-$menu-padding: 8px;
-$divider-height: 30px;
-$border-radius: 4px;
-$transition-speed: 0.3s;
-
-// Menu Container
-ul.menu {
+.navbar-menu {
   display: flex;
   align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: 0;
 }
 
-// Logo
-.logo {
-  line-height: 0;
-  margin: 0;
-}
-
-.logo-link {
-  display: block;
-  text-decoration: none;
-}
-
-// Menu Items
-li.option-menu {
-  display: flex;
-  align-items: stretch;
-  padding: 0 $menu-padding;
-  list-style: none;
-
-  &:first-child {
-    padding-left: 0;
-  }
-
-  &:last-child {
-    padding-right: 0;
-  }
-}
-
-// Divider
-.full-height {
-  align-self: stretch;
-  height: $divider-height;
-  margin: 0;
-}
-
-// Links
-.link {
+.nav-link {
   display: flex;
   align-items: center;
-  padding: 4px $menu-padding;
-  border-radius: $border-radius;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+  font-weight: 400;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color $transition-speed ease;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
 
   &:hover,
   &.active {
-    background-color: $menu-hover-bg;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  &.logo-link {
+    padding: 0;
+    &:hover {
+      background-color: transparent;
+    }
   }
 }
 
-// Labels
-.label {
-  font-size: 14px;
-  font-weight: 400;
-  color: $menu-text-color;
-  white-space: nowrap;
-}
-
-// Dropdown Icon
-.icon-label {
-  width: 12px;
-  height: 12px;
-  margin-left: $menu-padding;
-  transition: transform $transition-speed ease;
-
-  &.rotated {
-    transform: rotate(180deg);
-  }
-}
-
-// Dropdown Menu
-ul.dropdown-menu {
-  display: flex;
-  flex-direction: column;
-  width: 150px;
-  padding: 7px;
-  list-style: none;
-
-  li {
-    border-radius: $border-radius;
-  }
+.nav-divider {
+  height: 30px;
+  margin: 0 8px;
 }

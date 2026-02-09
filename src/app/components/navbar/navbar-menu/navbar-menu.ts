@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 export interface DropdownMenuItem {
   label: string;
@@ -18,7 +19,14 @@ export interface NavMenuItem {
 
 @Component({
   selector: 'app-navbar-menu',
-  imports: [NzMenuModule, RouterLink, RouterLinkActive, NzDividerModule, NzDropdownModule],
+  imports: [
+    NzMenuModule,
+    RouterLink,
+    RouterLinkActive,
+    NzDividerModule,
+    NzDropdownModule,
+    NzIconModule,
+  ],
   templateUrl: './navbar-menu.html',
   styleUrl: './navbar-menu.scss',
 })

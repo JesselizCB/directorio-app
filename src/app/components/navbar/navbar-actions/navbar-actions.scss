@@ -1,142 +1,69 @@
-:host {
-  display: block;
-}
-
-// Variables
-$actions-text-color: #ffffff;
-$actions-hover-bg: rgba(255, 255, 255, 0.1);
-$actions-padding: 8px;
-$divider-height: 30px;
-$border-radius: 4px;
-$transition-speed: 0.3s;
-
-// Menu Container
-ul.actions-menu {
+.navbar-actions {
   display: flex;
   align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: 0;
 }
 
-// Logo
-.logo {
-  line-height: 0;
-  margin: 0;
-}
-
-// Divider
-.full-height {
-  align-self: stretch;
-  height: $divider-height;
-  margin: 0;
-}
-
-// Menu Items
-li.option-menu {
-  display: flex;
-  align-items: stretch;
-  padding: 0 $actions-padding;
-  list-style: none;
-
-  &:first-child {
-    padding-left: 0;
-  }
-
-  &:last-child {
-    padding-right: 0;
-  }
-}
-
-// Links
-.link {
+.user-section {
   display: flex;
   align-items: center;
-  padding: 4px $actions-padding;
-  border-radius: $border-radius;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color $transition-speed ease;
+  transition: background-color 0.3s ease;
 
   &:hover,
   &.active {
-    background-color: $actions-hover-bg;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  &.logo-alt {
+    width: 87px;
+    height: 34px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    justify-content: center;
   }
 }
 
-// User Avatar
+.nav-divider {
+  height: 30px !important;
+  margin: 0 8px !important;
+
+  ::ng-deep .ant-divider-vertical {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.help-icon {
+  width: 21px;
+  height: 21px;
+  background-color: rgb(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
 .user-avatar {
   background-image: url('/assets/bg_avatar.png');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  margin: 0 5px;
   font-size: 20px;
-}
-
-// Labels
-.label {
-  font-size: 14px;
-  font-weight: 400;
-  color: $actions-text-color;
-  white-space: nowrap;
-}
-
-// Dropdown Icon
-.icon-label {
-  width: 12px;
-  height: 12px;
-  margin-left: 24px;
-  transition: transform $transition-speed ease;
-
-  &.rotated {
-    transform: rotate(180deg);
-  }
-}
-
-// Notification Icon
-.notification-icon {
-  font-size: 14px;
-  color: $actions-text-color;
-}
-
-// Logo Alt Container
-.rectangle-container-logo-alt {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 87px;
-  height: 34px;
-  background-color: #fff;
-  border-radius: 3px;
-  border: 1px solid #d9d9d9;
-}
-
-// Dropdown Menu
-ul.dropdown-menu {
-  display: flex;
-  flex-direction: column;
-  width: 150px;
-  padding: 7px;
-  list-style: none;
-
-  li {
-    border-radius: $border-radius;
-  }
-}
-
-// Custom Icons
-.custom-action-question {
-  width: 21px;
-  height: 21px;
-  background-color: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color $transition-speed ease;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+  margin-right: 5px;
+  ::ng-deep .ant-avatar-string {
+    color: white;
   }
 }

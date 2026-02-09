@@ -1,94 +1,79 @@
-<ul class="actions-menu">
+<div class="navbar-actions">
   <!-- Briefcase Icon -->
-  <li class="option-menu">
-    <a href="#" class="link" title="Proyectos">
-      <nz-icon>
-        <img src="assets/icon_briefcase.svg" alt="Proyectos" />
-      </nz-icon>
-    </a>
-  </li>
-  <li>
-    <nz-divider class="full-height" nzType="vertical" />
-  </li>
+  <a href="#" class="nav-link" title="Proyectos">
+    <img src="assets/icon_briefcase.svg" alt="Proyectos" width="20" height="20" />
+  </a>
+
+  <nz-divider nzType="vertical" class="nav-divider" />
 
   <!-- Help Icon -->
-  <li class="option-menu">
-    <a href="#" class="link" title="Ayuda">
-      <nz-icon class="custom-action-question">
-        <img src="assets/icon_question_circle.svg" alt="Ayuda" />
-      </nz-icon>
-    </a>
-  </li>
-  <li>
-    <nz-divider class="full-height" nzType="vertical" />
-  </li>
+  <a href="#" class="nav-link" title="Ayuda">
+    <nz-icon class="help-icon">
+      <img src="assets/icon_question_circle.svg" alt="question circle" />
+    </nz-icon>
+  </a>
+
+  <nz-divider nzType="vertical" class="nav-divider" />
 
   <!-- Notifications -->
-  <li class="option-menu">
-    <a href="#" class="link" title="Notificaciones">
-      <nz-badge
-        class="badge"
-        [nzCount]="notificationCount()"
-        nzSize="small"
-        [nzStyle]="{
-          'box-shadow': 'none',
-          'line-height': '10px',
-          'min-width': '12px',
-          height: '12px',
-          'font-size': '10px'
-        }"
-      >
-        <nz-icon nzType="bell" nzTheme="fill" class="notification-icon" />
-      </nz-badge>
-    </a>
-  </li>
-  <li>
-    <nz-divider class="full-height" nzType="vertical" />
-  </li>
+  <a href="#" class="nav-link" title="Notificaciones">
+    <nz-badge
+      [nzCount]="notificationCount()"
+      [nzSize]="'small'"
+      [nzStyle]="{
+        'box-shadow': 'none',
+        'line-height': '10px',
+        'min-width': '12px',
+        'height': '12px',
+        'font-size': '10px'
+      }"
+    >
+      <span nz-icon nzType="bell" nzTheme="fill" style="color: white; font-size: 14px;"></span>
+    </nz-badge>
+  </a>
+
+  <nz-divider nzType="vertical" class="nav-divider" />
 
   <!-- User Menu -->
-  <li class="option-menu">
+  <div class="user-section">
     <nz-avatar
       [nzText]="userInitial()"
-      [nzSize]="38"
       class="user-avatar"
     />
     <a
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-      class="link"
+      class="nav-link"
       nz-dropdown
       nzTrigger="click"
       [nzDropdownMenu]="userMenu"
       (nzVisibleChange)="onDropdownVisibleChange($event)"
     >
-      <span class="label">{{ userName() }}</span>
-      <img
-        class="icon-label"
-        [class.rotated]="isDropdownOpen()"
-        src="assets/arrow_down.svg"
-        alt="Menú usuario"
-      />
+      {{ userName() }}
+      <span 
+        nz-icon 
+        [nzType]="isDropdownOpen() ? 'up' : 'down'"
+        style="margin-left: 24px; font-size: 12px;">
+      </span>
     </a>
-    <nz-dropdown-menu #userMenu="nzDropdownMenu">
-      <ul class="dropdown-menu" nz-menu>
-        @for (item of userMenuItems(); track item.label) {
-          <li nz-menu-item [routerLink]="item.route" routerLinkActive="active">
-            {{ item.label }}
-          </li>
-        }
-      </ul>
-    </nz-dropdown-menu>
-  </li>
+  </div>
+  <nz-dropdown-menu #userMenu="nzDropdownMenu">
+    <ul nz-menu>
+      @for (item of userMenuItems(); track item.label) {
+        <li nz-menu-item [routerLink]="item.route" routerLinkActive="active">
+          {{ item.label }}
+        </li>
+      }
+    </ul>
+  </nz-dropdown-menu>
+
+  <nz-divider nzType="vertical" class="nav-divider" />
 
   <!-- Logo Alt -->
-  <li class="option-menu">
-    <div class="rectangle-container-logo-alt">
-      <a routerLink="/" class="link">
-        <figure class="logo">
-          <img src="assets/logo_alt.svg" alt="Mandii" />
-        </figure>
-      </a>
-    </div>
-  </li>
-</ul>
+  <a 
+    routerLink="/" 
+    class="nav-link logo-alt"
+  >
+    <img src="assets/logo_alt.svg" alt="Mandii" />
+  </a>
+</div>

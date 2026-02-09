@@ -1,29 +1,16 @@
-:host {
-  display: block;
-}
-
 .app-page-header {
   background: linear-gradient(90deg, #2E52F8 0%, #56A7F2 100%);
-  color: #fff;
   padding: 1px 16px;
-
+  
   ::ng-deep .ant-page-header-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
   }
-}
 
-.app-page-header-title {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex: 1;
-}
-
-.app-page-header-extra {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  ::ng-deep .ant-page-header-heading-title,
+  ::ng-deep .ant-page-header-heading-extra {
+    color: white;
+  }
 }
