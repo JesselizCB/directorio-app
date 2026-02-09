@@ -1,0 +1,58 @@
+<ul class="menu">
+  <!-- Logo -->
+  <li class="option-menu">
+    <a routerLink="/" class="logo-link">
+      <figure class="logo">
+        <img src="assets/logo_mandu.svg" alt="Mandii" height="20" width="78" />
+      </figure>
+    </a>
+  </li>
+
+  <!-- Menu Items -->
+  @for (item of menuItems(); track item.label) {
+    <li>
+      <nz-divider class="full-height" nzType="vertical" />
+    </li>
+    <li class="option-menu">
+      @if (item.hasDropdown && item.dropdownItems) {
+        <!-- Dropdown Menu Item -->
+        <a
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="link"
+          nz-dropdown
+          nzTrigger="click"
+          [nzDropdownMenu]="dropdownMenu"
+          (nzVisibleChange)="onDropdownVisibleChange(item.label, $event)"
+        >
+          <span class="label">{{ item.label }}</span>
+          <img
+            class="icon-label"
+            [class.rotated]="isDropdownOpen(item.label)"
+            src="assets/arrow_down.svg"
+            alt="Dropdown arrow"
+          />
+        </a>
+        <nz-dropdown-menu #dropdownMenu="nzDropdownMenu">
+          <ul class="dropdown-menu" nz-menu>
+            @for (dropdownItem of item.dropdownItems; track dropdownItem.label) {
+              <li nz-menu-item [routerLink]="dropdownItem.route" routerLinkActive="active">
+                {{ dropdownItem.label }}
+              </li>
+            }
+          </ul>
+        </nz-dropdown-menu>
+      } @else {
+        <!-- Regular Menu Item -->
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="link"
+        >
+          <span class="label">{{ item.label }}</span>
+        </a>
+      }
+    </li>
+  }
+</ul>

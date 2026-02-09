@@ -1,0 +1,94 @@
+<ul class="actions-menu">
+  <!-- Briefcase Icon -->
+  <li class="option-menu">
+    <a href="#" class="link" title="Proyectos">
+      <nz-icon>
+        <img src="assets/icon_briefcase.svg" alt="Proyectos" />
+      </nz-icon>
+    </a>
+  </li>
+  <li>
+    <nz-divider class="full-height" nzType="vertical" />
+  </li>
+
+  <!-- Help Icon -->
+  <li class="option-menu">
+    <a href="#" class="link" title="Ayuda">
+      <nz-icon class="custom-action-question">
+        <img src="assets/icon_question_circle.svg" alt="Ayuda" />
+      </nz-icon>
+    </a>
+  </li>
+  <li>
+    <nz-divider class="full-height" nzType="vertical" />
+  </li>
+
+  <!-- Notifications -->
+  <li class="option-menu">
+    <a href="#" class="link" title="Notificaciones">
+      <nz-badge
+        class="badge"
+        [nzCount]="notificationCount()"
+        nzSize="small"
+        [nzStyle]="{
+          'box-shadow': 'none',
+          'line-height': '10px',
+          'min-width': '12px',
+          height: '12px',
+          'font-size': '10px'
+        }"
+      >
+        <nz-icon nzType="bell" nzTheme="fill" class="notification-icon" />
+      </nz-badge>
+    </a>
+  </li>
+  <li>
+    <nz-divider class="full-height" nzType="vertical" />
+  </li>
+
+  <!-- User Menu -->
+  <li class="option-menu">
+    <nz-avatar
+      [nzText]="userInitial()"
+      [nzSize]="38"
+      class="user-avatar"
+    />
+    <a
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="link"
+      nz-dropdown
+      nzTrigger="click"
+      [nzDropdownMenu]="userMenu"
+      (nzVisibleChange)="onDropdownVisibleChange($event)"
+    >
+      <span class="label">{{ userName() }}</span>
+      <img
+        class="icon-label"
+        [class.rotated]="isDropdownOpen()"
+        src="assets/arrow_down.svg"
+        alt="Menú usuario"
+      />
+    </a>
+    <nz-dropdown-menu #userMenu="nzDropdownMenu">
+      <ul class="dropdown-menu" nz-menu>
+        @for (item of userMenuItems(); track item.label) {
+          <li nz-menu-item [routerLink]="item.route" routerLinkActive="active">
+            {{ item.label }}
+          </li>
+        }
+      </ul>
+    </nz-dropdown-menu>
+  </li>
+
+  <!-- Logo Alt -->
+  <li class="option-menu">
+    <div class="rectangle-container-logo-alt">
+      <a routerLink="/" class="link">
+        <figure class="logo">
+          <img src="assets/logo_alt.svg" alt="Mandii" />
+        </figure>
+      </a>
+    </div>
+  </li>
+</ul>
