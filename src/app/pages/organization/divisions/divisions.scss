@@ -1,0 +1,37 @@
+.main-container {
+  padding: 17px 32px;
+}
+
+.radio-group {
+  .ant-radio-button-wrapper {
+    background-color: white !important;
+  }
+  
+  .ant-radio-button-wrapper-checked {
+    background-color: #EEF3FA !important;
+  }
+
+  .ant-radio-button-wrapper:first-child {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .ant-radio-button-wrapper:last-child {
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  & input {
+    border-radius: 4px;
+  }
+}

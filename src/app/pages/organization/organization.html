@@ -1,0 +1,29 @@
+<section class="organization-content">
+  <div class="organization-content-up">
+    <h1 style="margin: 0 25px">Organización</h1>
+    <nz-tabs
+      [nzTabBarExtraContent]="extraTemplate"
+      [nzSelectedIndex]="selectedTab()"
+      (nzSelectedIndexChange)="onTabChange($event)"
+      [nzTabBarStyle]="{ padding: '0 25px', color: '#A6A6A6', 'margin-bottom': '0' }"
+    >
+      @for(tab of tabs(); track tab.id) {
+      <nz-tab nzTitle="{{ tab.label }}"></nz-tab>
+      }
+    </nz-tabs>
+    <ng-template #extraTemplate>
+      <div class="organization-buttons">
+        <button nz-button nzType="primary" [nzSize]="'default'">
+          <nz-icon nzType="plus"></nz-icon>
+        </button>
+        <button nz-button nzType="default" [style]="{ color: '#1890FF' }">
+          <nz-icon nzType="download"></nz-icon>
+        </button>
+        <button nz-button nzType="default" [style]="{ color: '#1890FF' }">
+          <nz-icon nzType="upload"></nz-icon>
+        </button>
+      </div>
+    </ng-template>
+  </div>
+  <router-outlet></router-outlet>
+</section>

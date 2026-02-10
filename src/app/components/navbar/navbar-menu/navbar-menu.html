@@ -12,7 +12,7 @@
       <!-- Dropdown Menu Item -->
       <a
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: false }"
         class="nav-link"
         nz-dropdown
         nzTrigger="click"
@@ -40,7 +40,7 @@
       <a
         [routerLink]="item.route"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: item.label === 'Dashboard' }"
         class="nav-link"
       >
         {{ item.label }}

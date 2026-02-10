@@ -1,0 +1,39 @@
+<div class="main-container">
+  <div class="actions-container">
+    <nz-radio-group
+      class="radio-group"
+      [ngModel]="radioValue()"
+      (ngModelChange)="onRadioChange($event)"
+    >
+      <label nz-radio-button nzValue="list">Listado</label>
+      <label nz-radio-button nzValue="tree">Arbol</label>
+    </nz-radio-group>
+    <div class="search-container">
+        <nz-select
+          nzPlaceHolder="Columnas"
+          [ngModel]="selectedColumn()"
+          (ngModelChange)="onColumnSelect($event)"
+          style="width: 200px"
+        >
+          @for (column of columnsOptions(); track column.name) {
+          <nz-option [nzValue]="column.name" [nzLabel]="column.name"></nz-option>
+          }
+        </nz-select>
+        <div style="position: relative; display: inline-block;">
+          <input
+            type="text"
+            nz-input
+            placeholder="Buscar"
+            [ngModel]="inputSearch()"
+            (ngModelChange)="onInputSearch($event)"
+            style="padding-right: 30px;"
+          />
+          <nz-icon 
+            nzType="search" 
+            style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #a1a1a1; pointer-events: none;"
+          />
+        </div>
+      </div>
+  </div>
+   
+</div>
