@@ -4,6 +4,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { DivisionsTable } from '../../../components/table/table';
 
 interface ColumnOption {
   name: string;
@@ -16,7 +17,8 @@ interface ColumnOption {
     FormsModule, 
     NzSelectModule, 
     NzInputDirective, 
-    NzIconModule
+    NzIconModule,
+    DivisionsTable
   ],
   templateUrl: './divisions.html',
   styleUrl: './divisions.scss',

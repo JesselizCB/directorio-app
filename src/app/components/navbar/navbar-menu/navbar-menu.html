@@ -1,15 +1,12 @@
 <div class="navbar-menu">
-  <!-- Logo -->
   <a routerLink="/" class="nav-link logo-link">
     <img src="assets/logo_mandu.svg" alt="Mandu" height="20" width="78" />
   </a>
 
-  <!-- Menu Items -->
   @for (item of menuItems(); track item.label) {
     <nz-divider nzType="vertical" class="nav-divider" />
     
     @if (item.hasDropdown && item.dropdownItems) {
-      <!-- Dropdown Menu Item -->
       <a
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: false }"
@@ -36,7 +33,6 @@
         </ul>
       </nz-dropdown-menu>
     } @else {
-      <!-- Regular Menu Item -->
       <a
         [routerLink]="item.route"
         routerLinkActive="active"

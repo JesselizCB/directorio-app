@@ -1,1 +1,122 @@
-<p>table works!</p>
+<div>
+  <nz-table
+    #basicTable
+    [nzData]="filteredDivisions()"
+    [nzPageSize]="pageSize()"
+    [nzPageIndex]="pageIndex()"
+    (nzPageIndexChange)="onPageIndexChange($event)"
+    (nzPageSizeChange)="onPageSizeChange($event)"
+    [nzTotal]="filteredDivisions().length"
+    [nzFooter]="footerTemplate"
+    [nzShowPagination]="false"
+    nzShowSizeChanger
+  >
+    <thead>
+      <tr>
+        <th [nzChecked]="checked()"></th>
+        <th [nzSortFn]="sortByDivision" nzCustomFilter>
+          <div class="division-col-header">
+            <span>División</span>
+            <nz-filter-trigger
+              [nzActive]="selectedDivisionsApplied().size > 0"
+              [nzVisible]="divisionFilterOpen()"
+              (nzVisibleChange)="onDivisionFilterVisibleChange($event)"
+              [nzDropdownMenu]="divisionFilterMenu"
+            >
+              <span nz-icon nzType="filter" [nzTheme]="'fill'"></span>
+            </nz-filter-trigger>
+            <nz-dropdown-menu #divisionFilterMenu="nzDropdownMenu">
+              <div class="division-filter-panel" (click)="$event.stopPropagation()">
+                <div class="search-box">
+                  <nz-input-group nzSuffixIcon="search">
+                    <input
+                      type="text"
+                      nz-input
+                      [ngModel]="divisionSearchTerm()"
+                      (ngModelChange)="divisionSearchTerm.set($event)"
+                      placeholder="Buscar"
+                    />
+                  </nz-input-group>
+                  <ng-template>
+                    <nz-icon nzType="search"></nz-icon>
+                  </ng-template>
+                </div>
+                <div class="options">
+                  @for (opt of filteredDivisionOptions(); track opt) {
+                  <label nz-checkbox class="option-item" [ngModel]="isDivisionChecked(opt)" (ngModelChange)="toggleDivisionOption(opt)">
+                    {{ opt }}
+                  </label>
+                  } @if (filteredDivisionOptions().length === 0) {
+                  <div class="empty">Sin resultados</div>
+                  }
+                </div>
+                <div class="actions">
+                  <button nz-button nzType="link" (click)="applyDivisionFilter()">OK</button>
+                  <button nz-button nzType="link" (click)="clearDivisionFilter()">
+                    Reiniciar
+                  </button>
+                </div>
+              </div>
+            </nz-dropdown-menu>
+          </div>
+        </th>
+        <th
+          [nzSortFn]="sortByDivisionUp"
+          [nzFilterFn]="filterByDivisionUp"
+          [nzFilters]="divisionUpFilters()"
+          [nzFilterMultiple]="true"
+        >
+          División Superior
+        </th>
+        <th [nzSortFn]="sortByCollaborators">Colaboradores</th>
+        <th
+          [nzSortFn]="sortByNivel"
+          [nzFilterFn]="filterByNivel"
+          [nzFilters]="nivelFilters()"
+          [nzFilterMultiple]="true"
+        >
+          Nivel
+        </th>
+        <th [nzSortFn]="sortBySubdivisions">Subdivisiones</th>
+        <th [nzSortFn]="sortByAmbassadors">Embajadores</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (division of basicTable.data; track division.id) {
+      <tr>
+        <td [nzChecked]="setOfCheckedId.has(division.id)"></td>
+        <td>{{ division.division }}</td>
+        <td>{{ division.divisionUp }}</td>
+        <td>{{ division.collaborators }}</td>
+        <td>{{ division.nivel }}</td>
+        <td>
+          {{ division.subdivisions }}
+          <button nz-button nzType="primary" nzShape="circle" nzSize="small" class="add-btn">
+            <span nz-icon nzType="plus"></span>
+          </button>
+        </td>
+        <td>{{ division.ambassadors || '-' }}</td>
+      </tr>
+      }
+    </tbody>
+  </nz-table>
+  <ng-template #footerTemplate>
+    <div class="table-footer">
+      <div class="footer-left">
+        Total de Colaboradores:
+        {{ totalCollaboratorsFiltered() }}
+      </div>
+      <div class="footer-right">
+        <nz-pagination
+          [nzPageIndex]="pageIndex()"
+          [nzTotal]="filteredDivisions().length"
+          [nzPageSize]="pageSize()"
+          [nzPageSizeOptions]="pageSizeOptions"
+          (nzPageIndexChange)="onPageIndexChange($event)"
+          (nzPageSizeChange)="onPageSizeChange($event)"
+          nzShowSizeChanger
+        />
+      </div>
+    </div>
+  </ng-template>
+</div>

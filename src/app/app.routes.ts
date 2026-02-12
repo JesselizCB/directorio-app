@@ -1,21 +1,23 @@
 import { Routes } from '@angular/router';
-import { Organization } from './pages/organization/organization';
-import { Dashboard } from './pages/dashboard/dashboard';
-import { Divisions } from './pages/organization/divisions/divisions';
-import { Collaborators } from './pages/organization/collaborators/collaborators';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Dashboard 
+    loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard)
   },
   {
     path: 'organizations',
-    component: Organization,
+    loadComponent: () => import('./pages/organization/organization').then(m => m.Organization),
     children: [
       { path: '', redirectTo: 'divisions', pathMatch: 'full' },
-      { path: 'divisions', component: Divisions },
-      { path: 'collaborators', component: Collaborators }
+      { 
+        path: 'divisions',
+        loadComponent: () => import('./pages/organization/divisions/divisions').then(m => m.Divisions)
+      },
+      { 
+        path: 'collaborators',
+        loadComponent: () => import('./pages/organization/collaborators/collaborators').then(m => m.Collaborators)
+      }
     ]
   },
   {

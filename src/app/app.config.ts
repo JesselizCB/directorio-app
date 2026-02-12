@@ -2,15 +2,15 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
+import { es_ES, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
+import es from '@angular/common/locales/es';
 
-registerLocaleData(en);
+registerLocaleData(es);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes), provideNzI18n(en_US)
+    provideRouter(routes), provideNzI18n(es_ES)
   ]
 };
