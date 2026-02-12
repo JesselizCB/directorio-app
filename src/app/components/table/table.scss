@@ -11,6 +11,11 @@
   ::ng-deep .anticon-filter {
     color: #C4C4C4;
   }
+  
+  ::ng-deep .ant-table-filter-trigger-container-open .anticon-filter,
+  ::ng-deep .ant-table-filter-trigger.active .anticon-filter {
+    color: #1890ff;
+  }
 }
 
 .division-filter-panel {
@@ -25,9 +30,20 @@
 }
 .search-box {
   padding: 8px 8px 8px 8px;
+  position: relative;
   
   input {
     width: 100%;
+    padding-right: 32px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
   }
   
   ::ng-deep .ant-input-group {
@@ -125,7 +141,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0;
   font-size: 14px;
   gap: 12px;
   flex-wrap: wrap;
@@ -133,7 +148,7 @@
 
   .footer-left {
     display: flex;
-    gap: 8px;
+    // gap: 8px;
     flex-wrap: wrap;
   }
 
@@ -180,7 +195,7 @@
   .ant-table-footer {
     background: #F9F9F9;
     border-top: none;
-    padding: 16px;
+    padding: 16px 0px;
   }
 
   .ant-table-wrapper {

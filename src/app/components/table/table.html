@@ -22,24 +22,21 @@
               [nzVisible]="divisionFilterOpen()"
               (nzVisibleChange)="onDivisionFilterVisibleChange($event)"
               [nzDropdownMenu]="divisionFilterMenu"
+              [class.active]="selectedDivisionsApplied().size > 0"
             >
               <span nz-icon nzType="filter" [nzTheme]="'fill'"></span>
             </nz-filter-trigger>
             <nz-dropdown-menu #divisionFilterMenu="nzDropdownMenu">
               <div class="division-filter-panel" (click)="$event.stopPropagation()">
                 <div class="search-box">
-                  <nz-input-group nzSuffixIcon="search">
-                    <input
-                      type="text"
-                      nz-input
-                      [ngModel]="divisionSearchTerm()"
-                      (ngModelChange)="divisionSearchTerm.set($event)"
-                      placeholder="Buscar"
-                    />
-                  </nz-input-group>
-                  <ng-template>
-                    <nz-icon nzType="search"></nz-icon>
-                  </ng-template>
+                  <input
+                    type="text"
+                    nz-input
+                    [ngModel]="divisionSearchTerm()"
+                    (ngModelChange)="divisionSearchTerm.set($event)"
+                    placeholder="Buscar"
+                  />
+                  <span nz-icon nzType="search" class="search-icon"></span>
                 </div>
                 <div class="options">
                   @for (opt of filteredDivisionOptions(); track opt) {
