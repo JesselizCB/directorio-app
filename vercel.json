@@ -1,0 +1,16 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/directorio-app/browser",
+  "devCommand": "npm start",
+  "installCommand": "npm install",
+  "framework": null,
+  "env": {
+    "NODE_VERSION": "22"
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
