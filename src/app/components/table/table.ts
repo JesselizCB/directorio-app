@@ -1,4 +1,4 @@
-import { Component, computed, signal, input } from '@angular/core';
+import { Component, computed, signal, input, OnInit, inject } from '@angular/core';
 import { NzTableModule, NzTableSortFn, NzTableFilterFn, NzTableFilterList } from 'ng-zorro-antd/table';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
@@ -7,16 +7,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { FormsModule } from '@angular/forms';
-
-interface Division {
-  id: number;
-  division: string;
-  divisionUp: string;
-  collaborators: number;
-  nivel: number;
-  subdivisions: number;
-  ambassadors: string;
-}
+import { OrganizationService, Division } from '../../services/organization.service';
 
 @Component({
   selector: 'app-table',
@@ -33,7 +24,8 @@ interface Division {
   templateUrl: './table.html',
   styleUrl: './table.scss',
 })
-export class DivisionsTable {
+export class DivisionsTable implements OnInit {
+  private organizationService = inject(OrganizationService);
   // Inputs para búsqueda
   searchColumn = input<string>('');
   searchTerm = input<string>('');
@@ -42,7 +34,7 @@ export class DivisionsTable {
   pageSize = signal(10);
   pageSizeOptions = [5, 10, 20, 50];
 
-  listOfData: Division[] = [];
+  listOfData = signal<Division[]>([]);
   setOfCheckedId = new Set<number>();
   checked = signal(false);
 
@@ -64,7 +56,7 @@ export class DivisionsTable {
 
   // Computed: divisiones filtradas
   filteredDivisions = computed(() => {
-    let data = this.listOfData;
+    let data = this.listOfData();
     
     // Filtro por columna División (personalizado)
     const appliedFilters = this.selectedDivisionsApplied();
@@ -107,13 +99,13 @@ export class DivisionsTable {
 
   // Computed: filtros para División Superior
   divisionUpFilters = computed((): NzTableFilterList => {
-    const unique = [...new Set(this.listOfData.map(d => d.divisionUp))];
+    const unique = [...new Set(this.listOfData().map(d => d.divisionUp))];
     return unique.map(value => ({ text: value, value }));
   });
 
   // Computed: filtros para Nivel
   nivelFilters = computed((): NzTableFilterList => {
-    const unique = [...new Set(this.listOfData.map(d => d.nivel))].sort((a, b) => a - b);
+    const unique = [...new Set(this.listOfData().map(d => d.nivel))].sort((a, b) => a - b);
     return unique.map(value => ({ text: `${value}`, value }));
   });
 
@@ -191,21 +183,16 @@ export class DivisionsTable {
   }
 
   ngOnInit(): void {
-    const divisions = ['CEO', 'Strategy', 'Growth', 'Producto', 'Operaciones'];
-    const superiores = ['Dirección general', 'Producto', 'Operaciones'];
-    const embajadores = ['Jordyn Herwitz', 'Carla Siphron', 'Terry Press', 'Kierra Rosser', ''];
-
-    this.listOfData = new Array(135).fill(0).map((_, index) => ({
-      id: index,
-      division: divisions[Math.floor(Math.random() * divisions.length)],
-      divisionUp: superiores[Math.floor(Math.random() * superiores.length)],
-      collaborators: Math.floor(Math.random() * 10) + 1,
-      nivel: Math.floor(Math.random() * 5) + 1,
-      subdivisions: Math.floor(Math.random() * 5) + 1,
-      ambassadors: embajadores[Math.floor(Math.random() * embajadores.length)]
-    }));
-
-    // Extraer opciones únicas de división
-    this.allDivisionOptions = [...new Set(this.listOfData.map(d => d.division))].sort();
+    // Cargar datos desde el servicio
+    this.organizationService.getDivisions().subscribe({
+      next: (divisions) => {
+        this.listOfData.set(divisions);
+        // Extraer opciones únicas de división
+        this.allDivisionOptions = [...new Set(divisions.map(d => d.division))].sort();
+      },
+      error: (error) => {
+        console.error('Error al cargar divisiones:', error);
+      }
+    });
   }
 }
