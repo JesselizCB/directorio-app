@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, signal, input } from '@angular/core';
 import { NzTableModule, NzTableSortFn, NzTableFilterFn, NzTableFilterList } from 'ng-zorro-antd/table';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
@@ -34,12 +34,14 @@ interface Division {
   styleUrl: './table.scss',
 })
 export class DivisionsTable {
-  // Paginación
+  // Inputs para búsqueda
+  searchColumn = input<string>('');
+  searchTerm = input<string>('');
+
   pageIndex = signal(1);
   pageSize = signal(10);
   pageSizeOptions = [5, 10, 20, 50];
 
-  // Datos
   listOfData: Division[] = [];
   setOfCheckedId = new Set<number>();
   checked = signal(false);
@@ -62,11 +64,40 @@ export class DivisionsTable {
 
   // Computed: divisiones filtradas
   filteredDivisions = computed(() => {
+    let data = this.listOfData;
+    
+    // Filtro por columna División (personalizado)
     const appliedFilters = this.selectedDivisionsApplied();
-    if (appliedFilters.size === 0) return this.listOfData;
-    return this.listOfData.filter(item => 
-      appliedFilters.has(item.division)
-    );
+    if (appliedFilters.size > 0) {
+      data = data.filter(item => appliedFilters.has(item.division));
+    }
+    
+    // Filtro por búsqueda global (desde el input superior)
+    const column = this.searchColumn();
+    const term = this.searchTerm().toLowerCase().trim();
+    
+    if (column && term) {
+      data = data.filter(item => {
+        switch (column) {
+          case 'División':
+            return item.division.toLowerCase().includes(term);
+          case 'División Superior':
+            return item.divisionUp.toLowerCase().includes(term);
+          case 'Colaboradores':
+            return item.collaborators.toString().includes(term);
+          case 'Nivel':
+            return item.nivel.toString().includes(term);
+          case 'Subdivisiones':
+            return item.subdivisions.toString().includes(term);
+          case 'Embajadores':
+            return (item.ambassadors || '').toLowerCase().includes(term);
+          default:
+            return true;
+        }
+      });
+    }
+    
+    return data;
   });
 
   // Computed: total de colaboradores filtrados

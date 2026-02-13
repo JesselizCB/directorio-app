@@ -162,32 +162,21 @@
 .add-btn {
   background-color: #49C5A9E5;
   border: none;
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  padding: 2px;
-  margin-left: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: none;
-  vertical-align: middle;
+  color: #fff;
+  width: 16px ;
+  height: 16px;
+  min-width: 16px ;
+  padding: 0;
+  justify-content: center ;
+  margin-left: 20px;
   
-  &:hover, &:focus {
-    background-color: #49C5A9E5;
-    border: none;
-    opacity: 0.9;
-  }
-  
+  ::ng-deep nz-icon,
   ::ng-deep .anticon {
-    color: white;
     font-size: 12px;
-    display: inline-block;
   }
   
-  ::ng-deep .anticon svg {
-    width: 12px;
-    height: 12px;
+  ::ng-deep span {
+    line-height: 1;
   }
 }
 
@@ -230,7 +219,7 @@
     background-color: #F9F9F9;
     color: #555155;
     font-weight: 500;
-    padding: 16px;
+    padding: 10px 16px !important;
     border-bottom: none;
     border-right: none !important;
     border-left: none !important;
@@ -241,7 +230,7 @@
   }
 
   .ant-table-tbody > tr > td {
-    padding: 16px;
+    padding: 10px 16px !important;
     background: #fff;
     border-bottom: 1px solid #f0f0f0;
     border-right: 1px solid #f0f0f0;
