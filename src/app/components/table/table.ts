@@ -7,7 +7,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { FormsModule } from '@angular/forms';
-import { OrganizationService, Division } from '../../services/organization.service';
+import { OrganizationService, Division } from '../../services/rest/organization.service';
 
 @Component({
   selector: 'app-table',
@@ -43,13 +43,13 @@ export class DivisionsTable implements OnInit {
   divisionSearchTerm = signal('');
   selectedDivisions = signal(new Set<string>());
   selectedDivisionsApplied = signal(new Set<string>());
-  allDivisionOptions: string[] = [];
+  allDivisionOptions = signal<string[]>([]);
 
   // Computed: opciones de división filtradas por búsqueda
   filteredDivisionOptions = computed(() => {
     const term = this.divisionSearchTerm().toLowerCase();
-    if (!term) return this.allDivisionOptions;
-    return this.allDivisionOptions.filter(opt => 
+    if (!term) return this.allDivisionOptions();
+    return this.allDivisionOptions().filter(opt => 
       opt.toLowerCase().includes(term)
     );
   });
@@ -74,7 +74,7 @@ export class DivisionsTable implements OnInit {
           case 'División':
             return item.division.toLowerCase().includes(term);
           case 'División Superior':
-            return item.divisionUp.toLowerCase().includes(term);
+            return (item.divisionUp || '').toLowerCase().includes(term);
           case 'Colaboradores':
             return item.collaborators.toString().includes(term);
           case 'Nivel':
@@ -99,7 +99,7 @@ export class DivisionsTable implements OnInit {
 
   // Computed: filtros para División Superior
   divisionUpFilters = computed((): NzTableFilterList => {
-    const unique = [...new Set(this.listOfData().map(d => d.divisionUp))];
+    const unique = [...new Set(this.listOfData().map(d => d.divisionUp || 'Sin división superior'))];
     return unique.map(value => ({ text: value, value }));
   });
 
@@ -114,7 +114,7 @@ export class DivisionsTable implements OnInit {
     a.division.localeCompare(b.division);
 
   sortByDivisionUp: NzTableSortFn<Division> = (a, b) => 
-    a.divisionUp.localeCompare(b.divisionUp);
+    (a.divisionUp || '').localeCompare(b.divisionUp || '');
 
   sortByCollaborators: NzTableSortFn<Division> = (a, b) => 
     a.collaborators - b.collaborators;
@@ -130,7 +130,7 @@ export class DivisionsTable implements OnInit {
 
   // Funciones de filtrado
   filterByDivisionUp: NzTableFilterFn<Division> = (list: string[], item) => 
-    list.some(value => item.divisionUp.indexOf(value) !== -1);
+    list.some(value => (item.divisionUp || 'Sin división superior').indexOf(value) !== -1);
 
   filterByNivel: NzTableFilterFn<Division> = (list: number[], item) => 
     list.some(value => item.nivel === value);
@@ -188,7 +188,7 @@ export class DivisionsTable implements OnInit {
       next: (divisions) => {
         this.listOfData.set(divisions);
         // Extraer opciones únicas de división
-        this.allDivisionOptions = [...new Set(divisions.map(d => d.division))].sort();
+        this.allDivisionOptions.set([...new Set(divisions.map(d => d.division))].sort());
       },
       error: (error) => {
         console.error('Error al cargar divisiones:', error);

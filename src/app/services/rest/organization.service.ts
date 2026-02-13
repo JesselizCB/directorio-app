@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of, tap } from 'rxjs';
+import { ApiService, ApiResponse, EapiMethod } from '../modules/api';
 
 export interface Division {
   id: number;
@@ -12,19 +12,17 @@ export interface Division {
   ambassadors: string;
 }
 
-interface ApiResponse {
-  success: boolean;
-  data: Division[];
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
-  private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/divisions';
+  private apiService = inject(ApiService);
   private cache: Division[] | null = null;
+  private readonly endpoint = 'divisions';
 
+  /**
+   * Obtiene todas las divisiones
+   */
   getDivisions(): Observable<Division[]> {
     // Si ya hay datos en caché, devolverlos inmediatamente
     if (this.cache) {
@@ -32,9 +30,9 @@ export class OrganizationService {
     }
     
     // Llamada HTTP real a la API
-    return this.http.get<ApiResponse>(this.apiUrl).pipe(
-      map(response => response.data),
-      tap(divisions => {
+    return this.apiService.request(this.endpoint, EapiMethod.GET).pipe(
+      map((response: any) => response.data as Division[]),
+      tap((divisions: Division[]) => {
         this.cache = divisions;
         console.log('✅ Divisiones cargadas desde la API:', divisions.length);
       }),
@@ -45,12 +43,27 @@ export class OrganizationService {
     );
   }
 
-  // Método para limpiar el caché (útil si necesitas refrescar los datos)
+  
+  // Busca divisiones por nombre
+  searchDivisions(name: string): Observable<Division[]> {
+    return this.apiService.request(`${this.endpoint}/search/${name}`, EapiMethod.GET).pipe(
+      map((response: any) => response.data as Division[]),
+      catchError(error => {
+        return of([]);
+      })
+    );
+  }
+
+  /**
+   * Limpia el caché de divisiones
+   */
   clearCache(): void {
     this.cache = null;
   }
 
-  // Método para forzar recarga desde la API
+  /**
+   * Fuerza recarga de divisiones desde la API
+   */
   reloadDivisions(): Observable<Division[]> {
     this.clearCache();
     return this.getDivisions();

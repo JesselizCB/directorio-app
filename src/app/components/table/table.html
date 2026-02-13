@@ -83,7 +83,7 @@
       <tr>
         <td [nzChecked]="setOfCheckedId.has(division.id)"></td>
         <td>{{ division.division }}</td>
-        <td>{{ division.divisionUp }}</td>
+        <td>{{ division.divisionUp || '-' }}</td>
         <td>{{ division.collaborators }}</td>
         <td>{{ division.nivel }}</td>
         <td>
