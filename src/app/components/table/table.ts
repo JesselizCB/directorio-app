@@ -76,11 +76,17 @@ export class DivisionsTable implements OnInit {
           case 'División Superior':
             return (item.divisionUp || '').toLowerCase().includes(term);
           case 'Colaboradores':
-            return item.collaborators.toString().includes(term);
+            // Búsqueda exacta por número
+            const collabNumber = parseInt(term);
+            return !isNaN(collabNumber) && item.collaborators === collabNumber;
           case 'Nivel':
-            return item.nivel.toString().includes(term);
+            // Búsqueda exacta por número
+            const nivelNumber = parseInt(term);
+            return !isNaN(nivelNumber) && item.nivel === nivelNumber;
           case 'Subdivisiones':
-            return item.subdivisions.toString().includes(term);
+            // Búsqueda exacta por número
+            const subdivNumber = parseInt(term);
+            return !isNaN(subdivNumber) && item.subdivisions === subdivNumber;
           case 'Embajadores':
             return (item.ambassadors || '').toLowerCase().includes(term);
           default:

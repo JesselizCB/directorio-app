@@ -24,11 +24,15 @@ export class OrganizationService {
    * Obtiene todas las divisiones
    */
   getDivisions(): Observable<Division[]> {
+    console.log('📊 getDivisions() llamado');
+    
     // Si ya hay datos en caché, devolverlos inmediatamente
     if (this.cache) {
+      console.log('💾 Datos desde caché:', this.cache.length);
       return of(this.cache);
     }
     
+    console.log('🌐 Llamando a la API...');
     // Llamada HTTP real a la API
     return this.apiService.request(this.endpoint, EapiMethod.GET).pipe(
       map((response: any) => response.data as Division[]),
