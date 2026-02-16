@@ -58,7 +58,7 @@ export class DivisionsTable implements OnInit {
   filteredDivisions = computed(() => {
     let data = this.listOfData();
     
-    // Filtro por columna División (personalizado)
+    // Filtro por columna División 
     const appliedFilters = this.selectedDivisionsApplied();
     if (appliedFilters.size > 0) {
       data = data.filter(item => appliedFilters.has(item.division));
@@ -98,18 +98,18 @@ export class DivisionsTable implements OnInit {
     return data;
   });
 
-  // Computed: total de colaboradores filtrados
+  // total de colaboradores filtrados
   totalCollaboratorsFiltered = computed(() => {
     return this.filteredDivisions().reduce((sum, item) => sum + item.collaborators, 0);
   });
 
-  // Computed: filtros para División Superior
+  // filtros para División Superior
   divisionUpFilters = computed((): NzTableFilterList => {
     const unique = [...new Set(this.listOfData().map(d => d.divisionUp || 'Sin división superior'))];
     return unique.map(value => ({ text: value, value }));
   });
 
-  // Computed: filtros para Nivel
+  //filtros para Nivel
   nivelFilters = computed((): NzTableFilterList => {
     const unique = [...new Set(this.listOfData().map(d => d.nivel))].sort((a, b) => a - b);
     return unique.map(value => ({ text: `${value}`, value }));

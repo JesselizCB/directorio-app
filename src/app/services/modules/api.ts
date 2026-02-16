@@ -28,20 +28,14 @@ export class ApiService {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     });
-    console.log('🔧 ApiService initialized');
-    console.log('📍 API URL:', this.url);
-    console.log('🌍 Environment:', environment);
   }
 
   request(url: string = '', method: EapiMethod, body = {}) {
     const apiUrl = `${this.url}/${url}`;
-    console.log(`🌐 API Request: ${method} ${apiUrl}`);
-    
     // Para GET no enviamos body
     if (method === EapiMethod.GET) {
       return this.client.get(apiUrl, { headers: this.headers });
     }
-    
     return this.client.request(method, apiUrl, { body, headers: this.headers });
   }
 }
